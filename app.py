@@ -56,6 +56,20 @@ def card(title, *children):
 app = Dash(__name__, assets_folder="assets", assets_url_path="/assets", serve_locally=True)
 app.title = "DQ-AI Auditor"
 
+# ✅ Allow embedding the app inside your site (iframe)
+ALLOWED_EMBED = (
+    "https://shannonwiseanalytics.com "
+    "https://www.shannonwiseanalytics.com "
+    "https://dq-ai.onrender.com"
+)
+
+@app.server.after_request
+def _allow_iframe(resp):
+    # remove default frame blocker and explicitly allow your domains
+    resp.headers.pop("X-Frame-Options", None)
+    resp.headers["Content-Security-Policy"] = f"frame-ancestors 'self' {ALLOWED_EMBED};"
+    return resp
+
 # cap upload size to 25 MB (adjust if you want)
 app.server.config["MAX_CONTENT_LENGTH"] = 25 * 1024 * 1024
 
@@ -414,6 +428,8 @@ def render_filtered(sev_filter, store):
 
     return topfixes, finding_cards
 
+
+# Expose Flask server for Gunicorn
 server = app.server
 
 if __name__ == "__main__":
