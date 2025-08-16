@@ -1,0 +1,25 @@
+{
+  "columns": [
+    "id",
+    "order_date",
+    "ship_date",
+    "customer_email",
+    "postcode",
+    "amount",
+    "quantity",
+    "country"
+  ],
+  "dtypes": {
+    "id": "int64",
+    "order_date": "object",
+    "ship_date": "object",
+    "customer_email": "object",
+    "postcode": "object",
+    "amount": "float64",
+    "quantity": "int64",
+    "country": "object"
+  },
+  "primary_key": [
+    "id"
+  ]
+}
